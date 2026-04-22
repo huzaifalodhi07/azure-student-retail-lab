@@ -1,0 +1,9 @@
+{
+	"name": "adf-retail-dev1234",
+	"location": "eastasia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "6eeae357-82ed-4144-a9c5-e0293794492e",
+		"tenantId": "12b221b3-0464-4223-89e5-888835778b58"
+	}
+}
