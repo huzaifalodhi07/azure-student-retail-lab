@@ -1,0 +1,27 @@
+name: Deploy Synapse Workspace Artifacts
+
+on:
+  push:
+    branches:
+      - workspace_publish
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy Synapse artifacts
+        uses: azure/synapse-workspace-deployment@release-1.0
+        with:
+          TargetWorkspaceName: '${{ secrets.TARGET_SYNAPSE_WORKSPACE }}'
+          TemplateFile: './workspace_publish/TemplateForWorkspace.json'
+          ParametersFile: './workspace_publish/TemplateParametersForWorkspace.json'
+          OverrideArmParameters: './workspace_publish/parameters.yaml'
+          environment: 'Azure Public'
+          resourceGroup: '${{ secrets.TARGET_RG }}'
+          clientId: '${{ secrets.CLIENTID }}'
+          clientSecret: '${{ secrets.CLIENTSECRET }}'
+          subscriptionId: '${{ secrets.TARGET_SUBSCRIPTION_ID }}'
