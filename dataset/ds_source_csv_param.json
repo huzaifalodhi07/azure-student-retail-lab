@@ -1,0 +1,58 @@
+{
+	"name": "ds_source_csv_param",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls_retail",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"folderpath": {
+				"type": "string"
+			},
+			"filename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().folderPath",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "source_entity",
+				"type": "String"
+			},
+			{
+				"name": "source_folder",
+				"type": "String"
+			},
+			{
+				"name": "source_format",
+				"type": "String"
+			},
+			{
+				"name": "sink_folder",
+				"type": "String"
+			},
+			{
+				"name": "load_enabled",
+				"type": "String"
+			}
+		]
+	}
+}
