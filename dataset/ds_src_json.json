@@ -1,0 +1,58 @@
+{
+	"name": "ds_src_json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls_retail",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"p_folder": {
+				"type": "string"
+			},
+			"p_file": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "@dataset().p_file",
+				"folderPath": "@dataset().p_folde"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"event_id": {
+					"type": "integer"
+				},
+				"event_time": {
+					"type": "string"
+				},
+				"customer_id": {
+					"type": "integer"
+				},
+				"session_id": {
+					"type": "string"
+				},
+				"event_type": {
+					"type": "string"
+				},
+				"product_id": {
+					"type": "integer"
+				},
+				"page_url": {
+					"type": "string"
+				},
+				"referrer": {
+					"type": "string"
+				},
+				"device_type": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}
