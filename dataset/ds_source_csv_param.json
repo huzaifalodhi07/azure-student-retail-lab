@@ -25,7 +25,8 @@
 				"folderPath": {
 					"value": "@dataset().folderPath",
 					"type": "Expression"
-				}
+				},
+				"fileSystem": "retaildatalake"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
