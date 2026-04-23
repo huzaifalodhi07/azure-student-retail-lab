@@ -1,0 +1,19 @@
+{
+	"name": "ds_curated_payments_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls_retail",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "curated/payments"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

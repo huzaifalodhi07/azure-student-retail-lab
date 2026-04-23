@@ -1,0 +1,19 @@
+{
+	"name": "ds_serving_sales_daily_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls_retail",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "serving/sales_daily"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
