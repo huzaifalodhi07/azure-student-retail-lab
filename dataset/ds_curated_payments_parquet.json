@@ -10,8 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "raw/payments",
-				"fileSystem": "retaildatalake"
+				"fileName": "payments.parquet",
+				"folderPath": "payments",
+				"fileSystem": "raw"
 			},
 			"compressionCodec": "snappy"
 		},

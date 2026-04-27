@@ -10,8 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "raw/orders",
-				"fileSystem": "retaildatalake"
+				"fileName": "orders.parquet",
+				"folderPath": "orders",
+				"fileSystem": "raw"
 			},
 			"compressionCodec": "snappy"
 		},
