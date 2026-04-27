@@ -18,8 +18,15 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "@dataset().p_file",
-				"folderPath": "@dataset().p_folder"
+				"fileName": {
+					"value": "@dataset().p_file",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().p_folder",
+					"type": "Expression"
+				},
+				"fileSystem": "retaildatalake"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
