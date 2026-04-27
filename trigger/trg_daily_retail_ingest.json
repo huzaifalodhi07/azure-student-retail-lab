@@ -1,0 +1,17 @@
+{
+	"name": "trg_daily_retail_ingest",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 40,
+				"startTime": "2026-04-27T12:27:00",
+				"timeZone": "Pakistan Standard Time"
+			}
+		}
+	}
+}
