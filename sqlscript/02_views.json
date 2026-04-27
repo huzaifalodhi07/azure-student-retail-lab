@@ -1,0 +1,17 @@
+{
+	"name": "02_views",
+	"properties": {
+		"content": {
+			"query": "USE retail_serverless;\nGO\n\nCREATE OR ALTER VIEW ext.vw_customers AS\nSELECT *\nFROM OPENROWSET(\n    BULK 'https://<storage-account>.dfs.core.windows.net/retaildatalake/curated/customers/*.parquet',\n    FORMAT = 'PARQUET'\n) AS rows;\nGO\n\nCREATE OR ALTER VIEW ext.vw_products AS\nSELECT *\nFROM OPENROWSET(\n    BULK 'https://<storage-account>.dfs.core.windows.net/retaildatalake/curated/products/*.parquet',\n    FORMAT = 'PARQUET'\n) AS rows;\nGO\n\nCREATE OR ALTER VIEW ext.vw_orders AS\nSELECT *\nFROM OPENROWSET(\n    BULK 'https://<storage-account>.dfs.core.windows.net/retaildatalake/curated/orders/*.parquet',\n    FORMAT = 'PARQUET'\n) AS rows;\nGO\n\nCREATE OR ALTER VIEW ext.vw_order_items AS\nSELECT *\nFROM OPENROWSET(\n    BULK 'https://<storage-account>.dfs.core.windows.net/retaildatalake/curated/order_items/*.parquet',\n    FORMAT = 'PARQUET'\n) AS rows;\nGO\n\nCREATE OR ALTER VIEW ext.vw_payments AS\nSELECT *\nFROM OPENROWSET(\n    BULK 'https://<storage-account>.dfs.core.windows.net/retaildatalake/curated/payments/*.parquet',\n    FORMAT = 'PARQUET'\n) AS rows;\nGO\n\nCREATE OR ALTER VIEW ext.vw_returns AS\nSELECT *\nFROM OPENROWSET(\n    BULK 'https://<storage-account>.dfs.core.windows.net/retaildatalake/curated/returns/*.parquet',\n    FORMAT = 'PARQUET'\n) AS rows;\nGO\n\nCREATE OR ALTER VIEW ext.vw_web_events AS\nSELECT *\nFROM OPENROWSET(\n    BULK 'https://<storage-account>.dfs.core.windows.net/retaildatalake/curated/web_events/*.parquet',\n    FORMAT = 'PARQUET'\n) AS rows;\nGO\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "retail_serverless",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

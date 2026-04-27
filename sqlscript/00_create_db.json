@@ -1,0 +1,17 @@
+{
+	"name": "00_create_db",
+	"properties": {
+		"content": {
+			"query": "CREATE DATABASE retail_serverless;\nGO\nUSE retail_serverless;\nGO\n\nCREATE SCHEMA ext;\nGO\nCREATE SCHEMA serving;\nGO\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "retail_serverless",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

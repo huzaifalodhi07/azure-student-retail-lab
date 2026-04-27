@@ -1,0 +1,17 @@
+{
+	"name": "03_analytics_views",
+	"properties": {
+		"content": {
+			"query": "USE retail_serverless;\nGO\n\nCREATE OR ALTER VIEW serving.vw_sales_daily AS\nSELECT\n    CAST(o.order_date AS date) AS sales_date,\n    o.sales_channel,\n    COUNT(DISTINCT o.order_id) AS orders,\n    COUNT(DISTINCT o.customer_id) AS customers,\n    SUM(CAST(oi.quantity AS float) * CAST(oi.unit_price AS float) * (1 - CAST(oi.discount_pct AS float))) AS total_revenue\nFROM ext.vw_orders o\nJOIN ext.vw_order_items oi\n  ON o.order_id = oi.order_id\nWHERE o.order_status <> 'Cancelled'\nGROUP BY CAST(o.order_date AS date), o.sales_channel;\nGO\n\nCREATE OR ALTER VIEW serving.vw_customer_360 AS\nSELECT\n    o.customer_id,\n    COUNT(DISTINCT o.order_id) AS total_orders,\n    SUM(CAST(oi.quantity AS float) * CAST(oi.unit_price AS float) * (1 - CAST(oi.discount_pct AS float))) AS total_revenue,\n    MAX(CAST(o.order_date AS date)) AS last_order_date\nFROM ext.vw_orders o\nJOIN ext.vw_order_items oi\n  ON o.order_id = oi.order_id\nWHERE o.order_status <> 'Cancelled'\nGROUP BY o.customer_id;\nGO\n\nCREATE OR ALTER VIEW serving.vw_product_performance AS\nSELECT\n    oi.product_id,\n    COUNT(DISTINCT oi.order_id) AS order_count,\n    SUM(CAST(oi.quantity AS float)) AS units_sold,\n    SUM(CAST(oi.quantity AS float) * CAST(oi.unit_price AS float) * (1 - CAST(oi.discount_pct AS float))) AS total_revenue\nFROM ext.vw_order_items oi\nGROUP BY oi.product_id;\nGO\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "retail_serverless",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
