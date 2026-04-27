@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ds_curated_orders_parquet",
+						"referenceName": "ds_curated_order_items_parquet",
 						"type": "DatasetReference"
 					},
 					"name": "orders"

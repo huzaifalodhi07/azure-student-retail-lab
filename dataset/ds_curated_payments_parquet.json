@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "curated/payments",
+				"folderPath": "raw/payments",
 				"fileSystem": "retaildatalake"
 			},
 			"compressionCodec": "snappy"

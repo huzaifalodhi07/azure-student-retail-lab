@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "curated/orders",
+				"folderPath": "raw/orders",
 				"fileSystem": "retaildatalake"
 			},
 			"compressionCodec": "snappy"
