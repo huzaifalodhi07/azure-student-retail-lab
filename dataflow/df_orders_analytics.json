@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ds_curated_order_items_parquet",
+						"referenceName": "ds_curated_orders_parquet",
 						"type": "DatasetReference"
 					},
 					"name": "orders"
@@ -75,7 +75,7 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     format: 'parquet') ~> payments",
-				"orders, orderitems join(orders.order.id == orderitems.order_id,",
+				"orders, orderitems join(orders.order_items == orderitems.order_id,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
