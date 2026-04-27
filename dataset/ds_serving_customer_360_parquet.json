@@ -10,7 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "serving/customer_360"
+				"folderPath": "serving/customer_360",
+				"fileSystem": "retaildatalake"
 			},
 			"compressionCodec": "snappy"
 		},

@@ -10,7 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "serving/sales_daily"
+				"folderPath": "serving/ sales_daily",
+				"fileSystem": "retaildatalake"
 			},
 			"compressionCodec": "snappy"
 		},
