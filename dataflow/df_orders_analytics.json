@@ -5,14 +5,113 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "ds_curated_orders_parquet",
+						"type": "DatasetReference"
+					},
 					"name": "orders"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_curated_order_items_parquet",
+						"type": "DatasetReference"
+					},
+					"name": "orderitems"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_curated_payments_parquet",
+						"type": "DatasetReference"
+					},
+					"name": "payments"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_serving_sales_daily_parquet",
+						"type": "DatasetReference"
+					},
+					"name": "SinkSalesDaily"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_serving_customer_360_parquet",
+						"type": "DatasetReference"
+					},
+					"name": "SinkCustomer360"
+				}
+			],
+			"transformations": [
+				{
+					"name": "JoinOrdersOrderItems"
+				},
+				{
+					"name": "JoinWithPayments"
+				},
+				{
+					"name": "DeriveLineAmountSalesDate"
+				},
+				{
+					"name": "FilterNonCancelled"
+				},
+				{
+					"name": "AggSalesDaily"
+				},
+				{
+					"name": "AggCustomer360"
+				}
+			],
 			"scriptLines": [
 				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> orders"
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> orders",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> orderitems",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> payments",
+				"orders, orderitems join(orders.order.id == orderitems.order_id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JoinOrdersOrderItems",
+				"JoinOrdersOrderItems, payments join(order_id == payments.order_id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JoinWithPayments",
+				"JoinWithPayments derive(line_amount = toDecimal(quantity * unit_price * (1 - discount_pct), 18, 2),",
+				"          sales_date = toDate(order_date)) ~> DeriveLineAmountSalesDate",
+				"DeriveLineAmountSalesDate filter(order_status != 'Cancelled') ~> FilterNonCancelled",
+				"FilterNonCancelled aggregate(groupBy(sales_date,",
+				"          sales_channel = ERROR_FUNCTION('')),",
+				"     orders = countDistinct(order_id),",
+				"          customers = countDistinct(customer_id),",
+				"          total_revenue = sum(line_amount)) ~> AggSalesDaily",
+				"FilterNonCancelled aggregate(groupBy(customer_id = ERROR_FUNCTION('')),",
+				"     total_orders = countDistinct(order_id),",
+				"          total_revenue = sum(line_amount)) ~> AggCustomer360",
+				"AggSalesDaily sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SinkSalesDaily",
+				"AggCustomer360 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SinkCustomer360"
 			]
 		}
 	}
