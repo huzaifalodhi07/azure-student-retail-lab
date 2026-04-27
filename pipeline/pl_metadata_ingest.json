@@ -59,7 +59,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@equals(toLower(item().source_type), 'csv')",
+									"value": "@equals(toLower(string(item().source_format)), 'csv')",
 									"type": "Expression"
 								},
 								"ifFalseActivities": [
@@ -104,7 +104,10 @@
 												"type": "DatasetReference",
 												"parameters": {
 													"p_folder": "@item().source_folder",
-													"p_file": "@item().source_file"
+													"p_file": {
+														"value": "@concat(item().source_entity, '.json')",
+														"type": "Expression"
+													}
 												}
 											}
 										],
@@ -114,7 +117,10 @@
 												"type": "DatasetReference",
 												"parameters": {
 													"p_folder": "@item().sink_folder",
-													"p_file": "@concat(item().entity_name, '.parquet')"
+													"p_file": {
+														"value": "@concat(item().source_entity, '.parquet')",
+														"type": "Expression"
+													}
 												}
 											}
 										]
@@ -170,7 +176,10 @@
 												"type": "DatasetReference",
 												"parameters": {
 													"p_folder": "@item().source_folder",
-													"p_file": "@item().source_file"
+													"p_file": {
+														"value": "@concat(item().source_entity, '.csv')",
+														"type": "Expression"
+													}
 												}
 											}
 										],
@@ -179,8 +188,14 @@
 												"referenceName": "ds_sink_parquet",
 												"type": "DatasetReference",
 												"parameters": {
-													"p_folder": "@item().sink_folder",
-													"p_file": "@concat(item().entity_name, '.parquet')"
+													"p_folder": {
+														"value": "@item().source_folder",
+														"type": "Expression"
+													},
+													"p_file": {
+														"value": "@concat(item().source_entity, '.parquet')",
+														"type": "Expression"
+													}
 												}
 											}
 										]
